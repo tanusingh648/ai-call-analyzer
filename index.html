@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Call Analyzer Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">🧠 AI Call Analyzer</div>
+  <div class="status">AI Status: <span id="aiStatus">ACTIVE</span></div>
+</header>
+
+<div class="container">
+
+  <aside class="sidebar">
+    <ul>
+     <li class="active" onclick="showPage('live')">📞 Live Call</li>
+     <li onclick="showPage('history')">📊 History</li>
+     <li onclick="showPage('reports')">📁 Reports</li>
+     <li onclick="showPage('settings')"></li>
+
+    </ul>
+  </aside>
+
+  <main class="dashboard">
+
+    <!-- LIVE CALL -->
+    <section class="card">
+      <h2>🔴 Live Call Analysis</h2>
+      <p><b>Caller:</b> Unknown (+91 •••• 238)</p>
+      <p><b>Duration:</b> <span id="duration">00:00</span></p>
+
+      <div class="waveform">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="actions">
+      <button class="end" onclick="endCall()">❌ End Call</button>
+      <button class="block" onclick="blockCall()">🚫 Block</button>
+      <button class="report" onclick="reportCall()">📢 Report</button>
+      <textarea id="callText" placeholder="Live transcript / detected speech"></textarea>
+
+      <button onclick="sendToML()">🧠 Analyze with ML</button>
+
+      </div>
+
+    </section>
+
+    <!-- RISK -->
+    <section class="card center">
+      <h2>⚠ Risk Level</h2>
+      <div class="risk-circle" id="riskCircle">
+        <span id="riskValue">10%</span>
+      </div>
+      <p class="risk-text" id="riskText">LOW RISK</p>
+    </section>
+
+    <!-- KEYWORDS -->
+    <section class="card">
+      <h2>🗣 Detected Keywords</h2>
+      <ul id="keywordList"></ul>
+    </section>
+
+    <!-- BEHAVIOR -->
+    <section class="card">
+      <h2>🧠 Behavioral Flags</h2>
+      <ul id="behaviorList"></ul>
+    </section>
+
+    <!-- CALL HISTORY -->
+<section class="page hidden" id="history">
+  <h2>📊 Call History</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Number</th>
+        <th>Risk</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="historyTable"></tbody>
+  </table>
+</section>
+
+<!-- REPORTS -->
+<section class="page hidden" id="reports">
+  <h2>📁 Fraud Analytics</h2>
+  <canvas id="chart" width="400" height="200"></canvas>
+</section>
+
+
+  </main>
+</div>
+
+<footer class="alert" id="alertBar">
+  🚨 POSSIBLE FRAUD CALL — HANG UP IMMEDIATELY
+</footer>
+<input type="file" id="audioInput" accept="audio/*">
+<button onclick="sendAudio()">🎙 Analyze Audio</button>
+<button onclick="startLiveAnalysis()">▶ Analyze Call</button>
+<div id="settingsModal" style="display:none; position:fixed; inset:0; background:#000a;">
+  <div style="background:#12183a; padding:20px; width:300px; margin:10% auto; color:white;">
+    <h3>⚙️ Settings</h3>
+
+    <label><input type="checkbox" checked> Enable Mic</label><br>
+    <label><input type="checkbox" checked> Auto Analyze</label><br>
+    <label><input type="checkbox"> Hindi Support</label><br>
+
+    <button onclick="closeSettings()">Close</button>
+  </div>
+</div>
+
+<div class="menu-item" onclick="openSettings()">⚙️ Settings</div>
+
+
+
+<script src="script.js"></script>
+</body>
+</html>
